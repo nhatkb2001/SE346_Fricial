@@ -15,26 +15,26 @@ class onboardingScreen3 extends StatelessWidget {
           statusBarColor: Colors.transparent),
       child: Scaffold(
         body: Container(
-          color: Colors.white,
+          color: Color(0xFF202128),
           child: Column(children: [
             SizedBox(
-              height: 82,
+              height: 80,
             ),
             Container(
               alignment: Alignment.topCenter,
               child: Lottie.network(
-                  'https://assets2.lottiefiles.com/packages/lf20_hwcplx4x.json'),
+                  'https://assets8.lottiefiles.com/packages/lf20_x4b078j8.json'),
             ),
             SizedBox(
-              height: 35,
+              height: 40,
             ),
             Text(
               "Stay Connect with your friends",
               style: GoogleFonts.quicksand(
                 textStyle: TextStyle(
-                  color: Colors.black,
+                  color: Color(0xFFFFFFFF),
                   fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w800,
                 ),
               ),
             ),
@@ -43,6 +43,7 @@ class onboardingScreen3 extends StatelessWidget {
             ),
             Text(
               "It's easy when you can chat,call and interact\n\t\t\t with your friends wherever you are",
+              textAlign: TextAlign.center,
               style: GoogleFonts.quicksand(
                 textStyle: TextStyle(
                   color: Colors.grey,

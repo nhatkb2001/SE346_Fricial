@@ -18,15 +18,15 @@ class onboardingScreen4 extends StatelessWidget {
           color: Colors.white,
           child: Column(children: [
             SizedBox(
-              height: 82,
+              height: 80,
             ),
             Container(
               alignment: Alignment.topCenter,
               child: Lottie.network(
-                  'https://assets2.lottiefiles.com/packages/lf20_y1wVa2.json'),
+                  'https://assets5.lottiefiles.com/packages/lf20_bxcpovue.json'),
             ),
             SizedBox(
-              height: 35,
+              height: 40,
             ),
             Text(
               "What's for?",
@@ -39,10 +39,11 @@ class onboardingScreen4 extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 17,
+              height: 16,
             ),
             Text(
               "Communicate and share with others\naround you. In a game, train station,\nconcert, airport, party, in any crowed.",
+              textAlign: TextAlign.center,
               style: GoogleFonts.quicksand(
                 textStyle: TextStyle(
                   color: Colors.grey,

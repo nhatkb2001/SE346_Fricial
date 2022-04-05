@@ -18,15 +18,15 @@ class onboardingScreen2 extends StatelessWidget {
           color: Colors.white,
           child: Column(children: [
             SizedBox(
-              height: 82,
+              height: 80,
             ),
             Container(
               alignment: Alignment.topCenter,
               child: Lottie.network(
-                  'https://assets7.lottiefiles.com/private_files/lf30_bgtrs3yr.json'),
+                  'https://assets2.lottiefiles.com/private_files/lf30_sle66urp.json'),
             ),
             SizedBox(
-              height: 35,
+              height: 82,
             ),
             Text(
               "Share your Thought",
@@ -34,15 +34,16 @@ class onboardingScreen2 extends StatelessWidget {
                 textStyle: TextStyle(
                   color: Colors.black,
                   fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w800,
                 ),
               ),
             ),
             SizedBox(
-              height: 17,
+              height: 16,
             ),
             Text(
-              "Sharing great moments with \nfamily,relatives and friends.",
+              "Sharing great moments \nwith family,relatives and friends.",
+              textAlign: TextAlign.center,
               style: GoogleFonts.quicksand(
                 textStyle: TextStyle(
                   color: Colors.grey,

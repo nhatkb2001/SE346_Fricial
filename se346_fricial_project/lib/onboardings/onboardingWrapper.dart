@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:liquid_swipe/PageHelpers/LiquidController.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -30,7 +31,7 @@ class _onboardingWrapperState extends State<onboardingWrapper> {
                 setState(() {});
               },
               slideIconWidget: const Icon(
-                Icons.arrow_back_ios,
+                Iconsax.arrow_left_35,
                 color: Colors.black,
               ),
               pages: [
@@ -41,7 +42,7 @@ class _onboardingWrapperState extends State<onboardingWrapper> {
               ],
             ),
             Positioned(
-              bottom: 0,
+              bottom: 32,
               left: 16,
               right: 32,
               child: Row(
@@ -55,8 +56,10 @@ class _onboardingWrapperState extends State<onboardingWrapper> {
                     activeIndex: controller.currentPage,
                     count: 4,
                     effect: const WormEffect(
+                      dotHeight: 8,
+                      dotWidth: 8,
                       spacing: 16,
-                      dotColor: Colors.blue,
+                      dotColor: Color(0xFF888888),
                       activeDotColor: Colors.black,
                     ),
                     onDotClicked: (index) {
@@ -66,7 +69,6 @@ class _onboardingWrapperState extends State<onboardingWrapper> {
                   TextButton(
                     onPressed: () {
                       final page = controller.currentPage + 1;
-
                       page == 4
                           ? Navigator.push(
                               context,

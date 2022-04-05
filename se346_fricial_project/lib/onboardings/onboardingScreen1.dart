@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:iconsax/iconsax.dart';
 
 class onboardingScreen1 extends StatelessWidget {
   const onboardingScreen1({Key? key}) : super(key: key);
@@ -15,10 +16,10 @@ class onboardingScreen1 extends StatelessWidget {
           statusBarColor: Colors.transparent),
       child: Scaffold(
         body: Container(
-          color: Colors.white,
+          color: Color(0xFF202128),
           child: Column(children: [
             SizedBox(
-              height: 82,
+              height: 80,
             ),
             Container(
               alignment: Alignment.topCenter,
@@ -26,23 +27,24 @@ class onboardingScreen1 extends StatelessWidget {
                   'https://assets2.lottiefiles.com/packages/lf20_osdxlbqq.json'),
             ),
             SizedBox(
-              height: 35,
+              height: 40,
             ),
             Text(
               "Welcome to Fricial",
               style: GoogleFonts.quicksand(
                 textStyle: TextStyle(
-                  color: Colors.black,
+                  color: Color(0xFFFFFFFF),
                   fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w800,
                 ),
               ),
             ),
             SizedBox(
-              height: 17,
+              height: 16,
             ),
             Text(
               "Instant communication platform for all \nyour team communication in one place.",
+              textAlign: TextAlign.center,
               style: GoogleFonts.quicksand(
                 textStyle: TextStyle(
                   color: Colors.grey,
