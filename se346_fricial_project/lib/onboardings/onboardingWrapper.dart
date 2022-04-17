@@ -49,7 +49,12 @@ class _onboardingWrapperState extends State<onboardingWrapper> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SignInScreen()),
+                      );
+                    },
                     child: const Text('SKIP'),
                   ),
                   AnimatedSmoothIndicator(
@@ -73,7 +78,7 @@ class _onboardingWrapperState extends State<onboardingWrapper> {
                           ? Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SignUpScreen()),
+                                  builder: (context) => SignInScreen()),
                             )
                           : controller.animateToPage(
                               page: page > 4 ? 0 : page, duration: 400);
