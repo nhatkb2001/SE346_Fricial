@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       initialRoute: initScreen == 0 ? 'onboarding' : 'onboarding',
       routes: {
         'onboarding': (context) => onboardingWrapper(),
-        'signin': (context) => SignUpScreen(),
+        'signin': (context) => SignInScreen(),
       },
     );
   }
