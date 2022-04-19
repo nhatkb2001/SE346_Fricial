@@ -19,6 +19,8 @@ class _SignInScreenState extends State<SignInScreen> {
   final GlobalKey<FormState> _logInKey = GlobalKey<FormState>();
   final TextEditingController _email = TextEditingController();
   final TextEditingController _pwd = TextEditingController();
+  bool isHiddenPassword = true;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -106,19 +108,15 @@ class _SignInScreenState extends State<SignInScreen> {
                     height: 33,
                   ),
                   EmailTextFormField(
-                    hintText: '  Email',
-                    size: size,
-                    validator: (String? inputVal) {
-                      if (!emailRegex.hasMatch(inputVal.toString()))
-                        showSnackBar(context, 'Email format is not matching');
-                      return null;
-                    },
-                    textEditingController: this._email,
-                  ),
+                      hintText: '  Email',
+                      size: size,
+                      textEditingController: this._email,
+                      padding: 32.0),
                   SizedBox(
                     height: 16,
                   ),
                   PasswordTextFormField(
+                    context: context,
                     hintText: '  Password',
                     validator: (String? inputVal) {
                       if (!passRegex.hasMatch(
@@ -135,6 +133,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     },
                     textEditingController: _pwd,
                     size: size,
+                    isHiddenPassword: isHiddenPassword,
                   ),
                   SizedBox(
                     height: 16,

@@ -96,18 +96,11 @@ class _RecoveryPasswordScreenState extends State<RecoveryPasswordScreen> {
                     ),
                   ],
                 ),
-                RecoveryTextFormField(
-                  hintText: '  Enter your current email',
-                  size: size,
-                  validator: (String? inputVal) {
-                    if (!emailRegex.hasMatch(inputVal.toString())) {
-                      showSnackBar(context, 'Email format is not matching');
-                    }
-
-                    return null;
-                  },
-                  textEditingController: this._email,
-                ),
+                EmailTextFormField(
+                    hintText: '  Enter your current email',
+                    size: size,
+                    textEditingController: this._email,
+                    padding: 16.0),
                 SizedBox(
                   height: 32,
                 ),

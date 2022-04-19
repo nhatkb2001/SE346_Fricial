@@ -22,6 +22,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _name = TextEditingController();
 
   bool isChecked = false;
+  bool isHiddenPassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -108,36 +109,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: 33,
                 ),
                 EmailTextFormField(
-                  hintText: '  Full Name',
-                  size: size,
-                  validator: (String? inputVal) {
-                    if (inputVal!.length < 6) {
-                      showSnackBar(
-                          context, 'Full Name must be at least 6 characters');
-                    }
-                    return null;
-                  },
-                  textEditingController: this._name,
-                ),
+                    hintText: '  Full Name',
+                    size: size,
+                    textEditingController: this._name,
+                    padding: 32.0),
                 SizedBox(
                   height: 16,
                 ),
                 EmailTextFormField(
-                  hintText: '  Email',
-                  size: size,
-                  validator: (String? inputVal) {
-                    if (!emailRegex.hasMatch(inputVal.toString())) {
-                      showSnackBar(context, 'Email format is not matching');
-                    }
-
-                    return null;
-                  },
-                  textEditingController: this._email,
-                ),
+                    hintText: '  Email',
+                    size: size,
+                    textEditingController: this._email,
+                    padding: 32.0),
                 SizedBox(
                   height: 16,
                 ),
                 PasswordTextFormField(
+                  context: context,
                   hintText: '  Password',
                   validator: (String? inputVal) {
                     if (!passRegex.hasMatch(
@@ -149,6 +137,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                   textEditingController: _pwd,
                   size: size,
+                  isHiddenPassword: isHiddenPassword,
                 ),
                 SizedBox(
                   height: 16,
