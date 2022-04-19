@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:lottie/lottie.dart';
 import 'package:se346_fricial_project/authentication/widget/comomAuthMethod.dart';
 import 'package:se346_fricial_project/utils/colors.dart';
 
@@ -42,7 +43,7 @@ class _RecoveryPasswordScreenState extends State<RecoveryPasswordScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 38,
+                  height: 32,
                 ),
                 Row(
                   children: [
@@ -51,22 +52,30 @@ class _RecoveryPasswordScreenState extends State<RecoveryPasswordScreen> {
                         SizedBox(
                           width: 16,
                         ),
-                        Icon(
-                          Iconsax.back_square,
-                          color: AppColors.white2,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Icon(
+                            Iconsax.back_square,
+                            color: AppColors.white2,
+                          ),
                         ),
                         SizedBox(
                           width: 40,
                         ),
-                        Text(
-                          "Create Account",
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.poppins(
-                            textStyle: TextStyle(
-                              color: AppColors.white2,
-                              fontSize: 24,
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.w600,
+                        Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Recovery Password",
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.poppins(
+                              textStyle: TextStyle(
+                                color: AppColors.white2,
+                                fontSize: 24,
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
                         ),
@@ -75,12 +84,19 @@ class _RecoveryPasswordScreenState extends State<RecoveryPasswordScreen> {
                   ],
                 ),
                 SizedBox(
-                  height: 325,
+                  height: 120,
+                ),
+                Container(
+                  alignment: Alignment.topCenter,
+                  child: Lottie.network(
+                      'https://assets6.lottiefiles.com/packages/lf20_dneo0c5x.json',
+                      width: 240,
+                      height: 240),
                 ),
                 Row(
                   children: [
                     SizedBox(
-                      width: 16,
+                      width: 32,
                     ),
                     Text(
                       "Email",
@@ -95,6 +111,9 @@ class _RecoveryPasswordScreenState extends State<RecoveryPasswordScreen> {
                       ),
                     ),
                   ],
+                ),
+                SizedBox(
+                  height: 16,
                 ),
                 EmailTextFormField(
                     hintText: '  Enter your current email',
@@ -129,10 +148,10 @@ class _RecoveryPasswordScreenState extends State<RecoveryPasswordScreen> {
           buttonName,
           style: GoogleFonts.poppins(
             textStyle: TextStyle(
-              color: AppColors.black1,
+              color: AppColors.black,
               fontSize: 14,
               fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.normal,
             ),
           ),
         ),

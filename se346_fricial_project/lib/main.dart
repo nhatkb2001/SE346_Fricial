@@ -29,13 +29,12 @@ class MyApp extends StatelessWidget {
         cardColor: Colors.white70,
         accentColor: Colors.white,
       ),
-      initialRoute: initScreen == 0 ? 'navigator' : 'navigator',
+      initialRoute: initScreen == 0 ? 'onboarding' : 'signin',
       routes: {
         'onboarding': (context) => onboardingWrapper(),
         'signin': (context) => SignInScreen(),
         'dashboard': (context) => atDashboardScreen(),
         'navigator': (context) => navigationBar(),
-
       },
     );
   }

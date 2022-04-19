@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:se346_fricial_project/authentication/RecoveryPasswordScreen.dart';
 import 'package:se346_fricial_project/authentication/widget/comomAuthMethod.dart';
+import 'package:se346_fricial_project/dashboard/dashboardScreen.dart';
+import 'package:se346_fricial_project/navigationBar/navigationBar.dart';
 import 'package:se346_fricial_project/utils/colors.dart';
 import 'package:se346_fricial_project/utils/reg_exp.dart';
 import 'package:se346_fricial_project/utils/utils.dart';
@@ -319,6 +321,12 @@ class _SignInScreenState extends State<SignInScreen> {
         onPressed: () async {
           if (this._logInKey.currentState!.validate()) {
             print('Validated');
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => navigationBar(),
+              ),
+            );
           } else {
             print('Not Validated');
           }
