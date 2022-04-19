@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:se346_fricial_project/authentication/signInScreen.dart';
+import 'package:se346_fricial_project/dashboard/dashboardScreen.dart';
+import 'package:se346_fricial_project/navigationBar/navigationBar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'onboardings/onboardingWrapper.dart';
@@ -27,10 +29,13 @@ class MyApp extends StatelessWidget {
         cardColor: Colors.white70,
         accentColor: Colors.white,
       ),
-      initialRoute: initScreen == 0 ? 'onboarding' : 'onboarding',
+      initialRoute: initScreen == 0 ? 'navigator' : 'navigator',
       routes: {
         'onboarding': (context) => onboardingWrapper(),
         'signin': (context) => SignInScreen(),
+        'dashboard': (context) => atDashboardScreen(),
+        'navigator': (context) => navigationBar(),
+
       },
     );
   }
