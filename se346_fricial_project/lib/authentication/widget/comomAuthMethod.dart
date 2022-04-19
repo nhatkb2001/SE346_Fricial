@@ -35,10 +35,10 @@ Widget EmailTextFormField(
           textStyle: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w400,
-            color: AppColors.white1.withOpacity(0.5),
+            color: AppColors.grey1,
           ),
         ),
-        hintText: "Enter your email",
+        hintText: "Enter your Email",
         filled: true,
         border: OutlineInputBorder(
           borderSide: BorderSide.none,
@@ -77,13 +77,31 @@ Widget PasswordTextFormField({
       keyboardType: TextInputType.visiblePassword,
       autofillHints: [AutofillHints.password],
       decoration: InputDecoration(
+        suffixIcon: InkWell(
+            onTap: () {
+              isHiddenPassword = !isHiddenPassword;
+            },
+            child: isHiddenPassword
+                ? Stack(alignment: Alignment.centerRight, children: [
+                    Container(
+                        padding: EdgeInsets.only(right: 16),
+                        child:
+                            Icon(Iconsax.eye, size: 24, color: AppColors.grey1))
+                  ])
+                : Stack(alignment: Alignment.centerRight, children: [
+                    Container(
+                        padding: EdgeInsets.only(right: 16),
+                        child: Icon(Iconsax.eye_slash,
+                            size: 24, color: AppColors.grey1))
+                  ])),
         contentPadding: EdgeInsets.only(left: 8, right: 8),
         hintStyle: TextStyle(
-          fontSize: 16,
+          fontSize: 12,
+          fontFamily: 'Poppins',
           fontWeight: FontWeight.w400,
-          color: AppColors.white1.withOpacity(0.5),
+          color: AppColors.grey1,
         ),
-        hintText: "Enter your password",
+        hintText: "Enter your Password",
         filled: true,
         border: OutlineInputBorder(
           borderSide: BorderSide.none,
@@ -101,14 +119,14 @@ Widget PasswordTextFormField({
 
 Widget switchAnotherAuthScreen(
     BuildContext context, String buttonNameFirst, String buttonNameLast) {
-  return ElevatedButton(
+  return GestureDetector(
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
           buttonNameFirst,
           style: TextStyle(
-            color: AppColors.grey2,
+            color: AppColors.white,
             fontSize: 16.0,
           ),
         ),
@@ -121,11 +139,7 @@ Widget switchAnotherAuthScreen(
         ),
       ],
     ),
-    style: ElevatedButton.styleFrom(
-      elevation: 0.0,
-      primary: Colors.transparent,
-    ),
-    onPressed: () {
+    onTap: () {
       if (buttonNameLast == "Sign up for free")
         Navigator.push(
           context,

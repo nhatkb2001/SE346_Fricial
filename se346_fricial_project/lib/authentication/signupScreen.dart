@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:se346_fricial_project/authentication/widget/comomAuthMethod.dart';
 import 'package:se346_fricial_project/utils/colors.dart';
 
@@ -124,20 +125,80 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 SizedBox(
                   height: 16,
                 ),
-                PasswordTextFormField(
-                  context: context,
-                  hintText: '  Password',
-                  validator: (String? inputVal) {
-                    if (!passRegex.hasMatch(
-                      inputVal.toString(),
-                    ))
-                      showSnackBar(context,
-                          'Password must be minimum eight characters, at least one letter and one number');
-                    return null;
-                  },
-                  textEditingController: _pwd,
-                  size: size,
-                  isHiddenPassword: isHiddenPassword,
+                Form(
+                  // key: passwordFormKey,
+                  child: Container(
+                    margin: EdgeInsets.only(left: 32, right: 32),
+                    width: size.width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4),
+                      color: AppColors.white,
+                    ),
+                    alignment: Alignment.topCenter,
+                    child: TextFormField(
+                        style: TextStyle(
+                            fontFamily: 'SFProText',
+                            fontSize: 16,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w400),
+                        // controller: passwordController,
+                        obscureText: isHiddenPassword,
+                        keyboardType: TextInputType.visiblePassword,
+                        autofillHints: [AutofillHints.password],
+                        // //validator
+                        // validator: (password) {
+                        //   if (isPasswordValid(password.toString())) {
+                        //     return null;
+                        //   } else {
+                        //     return '';
+                        //   }
+                        // },
+                        decoration: InputDecoration(
+                          suffixIcon: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  isHiddenPassword = !isHiddenPassword;
+                                });
+                              },
+                              child: isHiddenPassword
+                                  ? Stack(
+                                      alignment: Alignment.centerRight,
+                                      children: [
+                                          Container(
+                                              padding:
+                                                  EdgeInsets.only(right: 20),
+                                              child: Icon(Iconsax.eye,
+                                                  size: 24, color: Colors.grey))
+                                        ])
+                                  : Stack(
+                                      alignment: Alignment.centerRight,
+                                      children: [
+                                          Container(
+                                              padding:
+                                                  EdgeInsets.only(right: 20),
+                                              child: Icon(Iconsax.eye_slash,
+                                                  size: 24, color: Colors.grey))
+                                        ])),
+                          contentPadding: EdgeInsets.only(left: 8, right: 8),
+                          hintStyle: TextStyle(
+                            fontSize: 12,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.grey1,
+                          ),
+                          hintText: "Enter your Password",
+                          filled: true,
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          errorStyle: TextStyle(
+                            color: Colors.transparent,
+                            fontSize: 0,
+                            height: 0,
+                          ),
+                        )),
+                  ),
                 ),
                 SizedBox(
                   height: 16,
@@ -157,7 +218,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       style: GoogleFonts.poppins(
                         textStyle: TextStyle(
                           color: Colors.white,
-                          fontSize: 12,
+                          fontSize: 14,
                           fontStyle: FontStyle.normal,
                           fontWeight: FontWeight.w200,
                         ),
@@ -169,7 +230,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       style: GoogleFonts.poppins(
                         textStyle: TextStyle(
                           color: AppColors.red,
-                          fontSize: 12,
+                          fontSize: 14,
                           fontStyle: FontStyle.normal,
                           fontWeight: FontWeight.w200,
                         ),
@@ -181,6 +242,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: 32,
                 ),
                 SignUpAuthButton(context, 'Sign up', size),
+                SizedBox(
+                  height: 32,
+                ),
                 switchAnotherAuthScreen(
                     context, 'Already have an account?', ' Sign In'),
               ],
