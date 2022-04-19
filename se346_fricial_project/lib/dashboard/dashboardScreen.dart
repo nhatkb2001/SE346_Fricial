@@ -142,10 +142,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
                           SizedBox(width: 16),
                       itemCount: 9,
                       itemBuilder: (context, index) {
-                        return GestureDetector(
-                            onTap: () {
-                              //stories
-                            },
+                        return Container(
                             child: (index == 0)
                                 ? Container(
                                     child: Column(
@@ -164,21 +161,41 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                                         BorderRadius.all(
                                                             Radius.circular(
                                                                 8)))),
-                                            Container(
-                                              padding: EdgeInsets.all(4),
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(4),
-                                                child: Image.network(
-                                                  'https://i.imgur.com/bCnExb4.jpg',
-                                                  width: 48,
-                                                  height: 48,
+                                            GestureDetector(
+                                              onTap: () {
+                                                //
+                                              },
+                                              child: Container(
+                                                padding: EdgeInsets.all(4),
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(4),
+                                                  child: Image.network(
+                                                    'https://i.imgur.com/bCnExb4.jpg',
+                                                    width: 48,
+                                                    height: 48,
+                                                  ),
                                                 ),
                                               ),
                                             ),
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 45, left: 45),
+                                              child: Container(
+                                                  width: 16,
+                                                  height: 16,
+                                                  decoration: BoxDecoration(
+                                                      color: white,
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  16))),
+                                                  child: Icon(Iconsax.add,
+                                                      size: 14, color: grey1)),
+                                            ),
                                           ],
                                         ),
-                                        SizedBox(height: 8),
+                                        SizedBox(height: 3),
                                         Container(
                                             child: Text(
                                           'Your Story',
