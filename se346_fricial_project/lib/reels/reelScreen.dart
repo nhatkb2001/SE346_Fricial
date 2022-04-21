@@ -8,6 +8,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:se346_fricial_project/constants/colors.dart';
 import 'package:se346_fricial_project/constants/fonts.dart';
 import 'package:se346_fricial_project/dashboard/dashboardScreen.dart';
+import 'package:se346_fricial_project/utils/loading_widget.dart';
 
 class atReelScreen extends StatefulWidget {
   @override
@@ -29,12 +30,17 @@ class _atReelScreen extends State<atReelScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: white,
-        child: Text(
-          'Reels',
-          style: TextStyle(fontSize: 50, color: black),
-        ),
+      body: Column(
+        children: [
+          Container(
+            color: white,
+            child: Text(
+              'Reels',
+              style: TextStyle(fontSize: 50, color: black),
+            ),
+          ),
+          LoadingWidget(),
+        ],
       ),
     );
   }

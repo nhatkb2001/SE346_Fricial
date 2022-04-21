@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,7 +21,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   final TextEditingController _email = TextEditingController();
   final TextEditingController _pwd = TextEditingController();
-  final TextEditingController _name = TextEditingController();
+  final TextEditingController _conformPwd = TextEditingController();
 
   bool isChecked = false;
   bool isHiddenPassword = true;
@@ -110,14 +111,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: 33,
                 ),
                 EmailTextFormField(
-                    hintText: '  Full Name',
-                    size: size,
-                    textEditingController: this._name,
-                    padding: 32.0),
-                SizedBox(
-                  height: 16,
-                ),
-                EmailTextFormField(
+                    validator: (email) =>
+                        email != null && !EmailValidator.validate(email)
+                            ? showSnackBar(context, 'Enter a valid email')
+                            : null,
                     hintText: '  Email',
                     size: size,
                     textEditingController: this._email,
@@ -125,80 +122,154 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 SizedBox(
                   height: 16,
                 ),
-                Form(
-                  // key: passwordFormKey,
-                  child: Container(
-                    margin: EdgeInsets.only(left: 32, right: 32),
-                    width: size.width,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                      color: AppColors.white,
-                    ),
-                    alignment: Alignment.topCenter,
-                    child: TextFormField(
-                        style: TextStyle(
-                            fontFamily: 'SFProText',
-                            fontSize: 16,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w400),
-                        // controller: passwordController,
-                        obscureText: isHiddenPassword,
-                        keyboardType: TextInputType.visiblePassword,
-                        autofillHints: [AutofillHints.password],
-                        // //validator
-                        // validator: (password) {
-                        //   if (isPasswordValid(password.toString())) {
-                        //     return null;
-                        //   } else {
-                        //     return '';
-                        //   }
-                        // },
-                        decoration: InputDecoration(
-                          suffixIcon: InkWell(
-                              onTap: () {
-                                setState(() {
-                                  isHiddenPassword = !isHiddenPassword;
-                                });
-                              },
-                              child: isHiddenPassword
-                                  ? Stack(
-                                      alignment: Alignment.centerRight,
-                                      children: [
-                                          Container(
-                                              padding:
-                                                  EdgeInsets.only(right: 20),
-                                              child: Icon(Iconsax.eye,
-                                                  size: 24, color: Colors.grey))
-                                        ])
-                                  : Stack(
-                                      alignment: Alignment.centerRight,
-                                      children: [
-                                          Container(
-                                              padding:
-                                                  EdgeInsets.only(right: 20),
-                                              child: Icon(Iconsax.eye_slash,
-                                                  size: 24, color: Colors.grey))
-                                        ])),
-                          contentPadding: EdgeInsets.only(left: 8, right: 8),
-                          hintStyle: TextStyle(
-                            fontSize: 12,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.grey1,
-                          ),
-                          hintText: "Enter your Password",
-                          filled: true,
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          errorStyle: TextStyle(
-                            color: Colors.transparent,
-                            fontSize: 0,
-                            height: 0,
-                          ),
-                        )),
+                Container(
+                  margin: EdgeInsets.only(left: 32, right: 32),
+                  width: size.width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    color: AppColors.white,
                   ),
+                  alignment: Alignment.topCenter,
+                  child: TextFormField(
+                      style: TextStyle(
+                          fontFamily: 'SFProText',
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400),
+                      controller: _pwd,
+                      obscureText: isHiddenPassword,
+                      keyboardType: TextInputType.visiblePassword,
+                      autofillHints: [AutofillHints.password],
+                      validator: (inputVal) {
+                        if (inputVal!.length < 6) {
+                          showSnackBar(context,
+                              'Password must be at least 6 characters');
+                          return '';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        suffixIcon: InkWell(
+                            onTap: () {
+                              setState(() {
+                                isHiddenPassword = !isHiddenPassword;
+                              });
+                            },
+                            child: isHiddenPassword
+                                ? Stack(
+                                    alignment: Alignment.centerRight,
+                                    children: [
+                                        Container(
+                                            padding: EdgeInsets.only(right: 20),
+                                            child: Icon(Iconsax.eye,
+                                                size: 24, color: Colors.grey))
+                                      ])
+                                : Stack(
+                                    alignment: Alignment.centerRight,
+                                    children: [
+                                        Container(
+                                            padding: EdgeInsets.only(right: 20),
+                                            child: Icon(Iconsax.eye_slash,
+                                                size: 24, color: Colors.grey))
+                                      ])),
+                        contentPadding: EdgeInsets.only(left: 8, right: 8),
+                        hintStyle: TextStyle(
+                          fontSize: 12,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.grey1,
+                        ),
+                        hintText: "Enter your Password",
+                        filled: true,
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        errorStyle: TextStyle(
+                          color: Colors.transparent,
+                          fontSize: 0,
+                          height: 0,
+                        ),
+                      )),
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                //conform password
+                Container(
+                  margin: EdgeInsets.only(left: 32, right: 32),
+                  width: size.width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    color: AppColors.white,
+                  ),
+                  alignment: Alignment.topCenter,
+                  child: TextFormField(
+                      style: TextStyle(
+                          fontFamily: 'SFProText',
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400),
+                      controller: _conformPwd,
+                      obscureText: isHiddenPassword,
+                      keyboardType: TextInputType.visiblePassword,
+                      autofillHints: [AutofillHints.password],
+                      validator: (inputVal) {
+                        if (inputVal!.length < 6) {
+                          showSnackBar(context,
+                              'Password must be at least 6 characters');
+                          return '';
+                        }
+                        if (this._pwd.text != this._conformPwd.text) {
+                          showSnackBar(context,
+                              'Password and Conform Password Not Same Here');
+                          return '';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        suffixIcon: InkWell(
+                            onTap: () {
+                              setState(() {
+                                isHiddenPassword = !isHiddenPassword;
+                              });
+                            },
+                            child: isHiddenPassword
+                                ? Stack(
+                                    alignment: Alignment.centerRight,
+                                    children: [
+                                        Container(
+                                            padding: EdgeInsets.only(right: 20),
+                                            child: Icon(Iconsax.eye,
+                                                size: 24, color: Colors.grey))
+                                      ])
+                                : Stack(
+                                    alignment: Alignment.centerRight,
+                                    children: [
+                                        Container(
+                                            padding: EdgeInsets.only(right: 20),
+                                            child: Icon(Iconsax.eye_slash,
+                                                size: 24, color: Colors.grey))
+                                      ])),
+                        contentPadding: EdgeInsets.only(left: 8, right: 8),
+                        hintStyle: TextStyle(
+                          fontSize: 12,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.grey1,
+                        ),
+                        hintText: "Confirm your Password",
+                        filled: true,
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        errorStyle: TextStyle(
+                          color: Colors.transparent,
+                          fontSize: 0,
+                          height: 0,
+                        ),
+                      )),
                 ),
                 SizedBox(
                   height: 16,
@@ -309,7 +380,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
         ),
         onPressed: () async {
-          if (this._signUpKey.currentState!.validate()) {
+          if (this._signUpKey.currentState!.validate() && isChecked) {
             print('Validated');
             SystemChannels.textInput.invokeMethod('TextInput.hide');
           } else {
