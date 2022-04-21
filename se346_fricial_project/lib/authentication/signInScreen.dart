@@ -7,12 +7,14 @@ import 'package:se346_fricial_project/authentication/RecoveryPasswordScreen.dart
 import 'package:se346_fricial_project/authentication/widget/comomAuthMethod.dart';
 import 'package:se346_fricial_project/dashboard/dashboardScreen.dart';
 import 'package:se346_fricial_project/navigationBar/navigationBar.dart';
+import 'package:se346_fricial_project/resources/sign_up_auth.dart';
 import 'package:se346_fricial_project/utils/colors.dart';
 import 'package:se346_fricial_project/utils/loading_widget.dart';
 import 'package:se346_fricial_project/utils/reg_exp.dart';
 import 'package:se346_fricial_project/utils/utils.dart';
 
 import '../profile/editProfileScreen.dart';
+import '../utils/enum_generation.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -25,8 +27,9 @@ class _SignInScreenState extends State<SignInScreen> {
   final GlobalKey<FormState> _logInKey = GlobalKey<FormState>();
   final TextEditingController _email = TextEditingController();
   final TextEditingController _pwd = TextEditingController();
+  final EmailAndPasswordAuth _emailAndPasswordAuth = EmailAndPasswordAuth();
   bool isHiddenPassword = true;
-  bool _loading = false;
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +52,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 fit: BoxFit.cover,
               ),
             ),
-            child: _loading
+            child: _isLoading
                 ? LoadingWidget()
                 : Container(
                     child: Column(
@@ -337,12 +340,36 @@ class _SignInScreenState extends State<SignInScreen> {
           if (this._logInKey.currentState!.validate()) {
             print('Validated');
             SystemChannels.textInput.invokeMethod('TextInput.hide');
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => EditProfileScreen(),
-              ),
-            );
+
+            final EmailSignInResults emailSignInResults =
+                await _emailAndPasswordAuth.signInWithEmailAndPassword(
+                    email: this._email.text, pwd: this._pwd.text);
+
+            String msg = '';
+            if (emailSignInResults == EmailSignInResults.SignInCompleted) {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (_) => navigationBar()),
+                  (route) => false);
+            } else if (emailSignInResults ==
+                EmailSignInResults.EmailNotVerified) {
+              msg =
+                  'Email not Verified.\nPlease Verify your email and then Log In';
+            } else if (emailSignInResults ==
+                EmailSignInResults.EmailOrPasswordInvalid)
+              msg = 'Email And Password Invalid';
+            else
+              msg = 'Sign In Not Completed';
+
+            if (msg != '')
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(msg)));
+
+            if (mounted) {
+              setState(() {
+                this._isLoading = false;
+              });
+            }
           } else {
             print('Not Validated');
           }

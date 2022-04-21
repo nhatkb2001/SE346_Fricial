@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:se346_fricial_project/utils/enum_generation.dart';
+
+import '../utils/enum_generation.dart';
 
 class EmailAndPasswordAuth {
   Future<EmailSignUpResults> sinUpAuth(

@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:se346_fricial_project/authentication/signInScreen.dart';
 import 'package:se346_fricial_project/dashboard/dashboardScreen.dart';
@@ -9,7 +10,8 @@ import 'onboardings/onboardingWrapper.dart';
 int initScreen = 0;
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding();
+  await Firebase.initializeApp();
   SharedPreferences preferences = await SharedPreferences.getInstance();
   initScreen = (preferences.getInt('initScreen') ?? 0);
   await preferences.setInt('initScreen', 1);
