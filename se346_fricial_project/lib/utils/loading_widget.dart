@@ -22,10 +22,11 @@ class LoadingWidget extends StatelessWidget {
           Text(
             'Loading...',
             style: TextStyle(
-                fontFamily: 'SFProText',
-                fontSize: 16,
-                color: AppColors.white,
-                fontWeight: FontWeight.w400),
+              fontFamily: 'SFProText',
+              fontSize: 16,
+              color: AppColors.white,
+              fontWeight: FontWeight.w400,
+            ),
           )
         ],
       ),

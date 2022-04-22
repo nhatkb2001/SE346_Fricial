@@ -341,6 +341,12 @@ class _SignInScreenState extends State<SignInScreen> {
             print('Validated');
             SystemChannels.textInput.invokeMethod('TextInput.hide');
 
+            if (mounted) {
+              setState(() {
+                this._isLoading = true;
+              });
+            }
+
             final EmailSignInResults emailSignInResults =
                 await _emailAndPasswordAuth.signInWithEmailAndPassword(
                     email: this._email.text, pwd: this._pwd.text);

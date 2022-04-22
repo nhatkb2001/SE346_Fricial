@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:iconsax/iconsax.dart';
 
 ///add constants
@@ -12,6 +15,9 @@ import 'package:se346_fricial_project/profile/profileScreen.dart';
 import 'package:se346_fricial_project/reels/reelScreen.dart';
 import 'package:se346_fricial_project/search/searchScreen.dart';
 
+import '../utils/colors.dart';
+import '../utils/utils.dart';
+
 class navigationBar extends StatefulWidget {
   @override
   _navigationBar createState() => _navigationBar();
@@ -20,16 +26,44 @@ class navigationBar extends StatefulWidget {
 class _navigationBar extends State<navigationBar>
     with SingleTickerProviderStateMixin {
   TabController? _tabController;
+  var userData = {};
+  bool isLoading = false;
+
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 5, vsync: this);
+    getData();
   }
 
   @override
   void dispose() {
     super.dispose();
     _tabController?.dispose();
+  }
+
+  getData() async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      var userSnap = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get();
+
+      userData = userSnap.data()!;
+
+      setState(() {});
+    } catch (e) {
+      showSnackBar(
+        context,
+        e.toString(),
+      );
+    }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -96,20 +130,27 @@ class _navigationBar extends State<navigationBar>
                   //   nbIncidentReport,
                   //   height: 24, width: 24
                   // )
-                  child: Container(
-                      height: 24,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            color: black,
-                            width: 1,
+                  child: isLoading
+                      ? SpinKitSpinningLines(
+                          color: AppColors.black1,
+                          size: 50.0,
+                        )
+                      : Container(
+                          height: 24,
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                color: black,
+                                width: 1,
+                              ),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(4))),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(4),
+                            child: Image.network(
+                              userData['photoUrl'],
+                            ),
                           ),
-                          borderRadius: BorderRadius.all(Radius.circular(4))),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(4),
-                        child: Image.network(
-                          'https://i.imgur.com/bCnExb4.jpg',
                         ),
-                      )),
                 ),
               ],
               controller: _tabController,
