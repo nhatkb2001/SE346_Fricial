@@ -1,9 +1,11 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:lottie/lottie.dart';
 import 'package:se346_fricial_project/authentication/widget/comomAuthMethod.dart';
+import 'package:se346_fricial_project/firebase/auth.dart';
 import 'package:se346_fricial_project/utils/colors.dart';
 
 import '../utils/reg_exp.dart';
@@ -116,6 +118,10 @@ class _RecoveryPasswordScreenState extends State<RecoveryPasswordScreen> {
                   height: 16,
                 ),
                 EmailTextFormField(
+                    validator: (email) =>
+                        email != null && !EmailValidator.validate(email)
+                            ? showSnackBar(context, 'Enter a valid email')
+                            : null,
                     hintText: '  Enter your current email',
                     size: size,
                     textEditingController: this._email,
@@ -158,7 +164,7 @@ class _RecoveryPasswordScreenState extends State<RecoveryPasswordScreen> {
         onPressed: () async {
           if (this._recoveryKey.currentState!.validate()) {
             print('Validated');
-            SystemChannels.textInput.invokeMethod('TextInput.hide');
+            resetPasswordUser(_email.text, context);
           } else {
             print('Not Validated');
           }

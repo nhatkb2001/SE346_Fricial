@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:se346_fricial_project/authentication/signInScreen.dart';
 import 'package:se346_fricial_project/dashboard/dashboardScreen.dart';
 import 'package:se346_fricial_project/navigationBar/navigationBar.dart';
+import 'package:se346_fricial_project/resources/cloud_data_management.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'onboardings/onboardingWrapper.dart';
@@ -9,7 +12,8 @@ import 'onboardings/onboardingWrapper.dart';
 int initScreen = 0;
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding();
+  await Firebase.initializeApp();
   SharedPreferences preferences = await SharedPreferences.getInstance();
   initScreen = (preferences.getInt('initScreen') ?? 0);
   await preferences.setInt('initScreen', 1);
@@ -33,8 +37,6 @@ class MyApp extends StatelessWidget {
       routes: {
         'onboarding': (context) => onboardingWrapper(),
         'signin': (context) => SignInScreen(),
-        'dashboard': (context) => atDashboardScreen(),
-        'navigator': (context) => navigationBar(),
       },
     );
   }

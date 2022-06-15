@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "442247715741",
+    "project_id": "se346-fricial-35875",
+    "storage_bucket": "se346-fricial-35875.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:442247715741:android:fe1f4437b39ffdae0f2d74",
+        "android_client_info": {
+          "package_name": "com.example.se346_fricial_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "442247715741-9qnmn7oqhdh6g4h07ikr3249ntqvm5pg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.se346_fricial_project",
+            "certificate_hash": "bc3bbee5384b44dc7c519d3f733c2548f71af56d"
+          }
+        },
+        {
+          "client_id": "442247715741-e1j2d1q4lpe5aomdpu23bgu83c18sbld.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9ADic7sdAUm1TgNpEDYl8s8lLdK2ZMig"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "442247715741-e1j2d1q4lpe5aomdpu23bgu83c18sbld.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
