@@ -13,7 +13,7 @@ import 'package:se346_fricial_project/dashboard/dashboardScreen.dart';
 import 'package:se346_fricial_project/models/user.dart';
 import 'package:se346_fricial_project/notification/notificationScreen.dart';
 import 'package:se346_fricial_project/profile/profileScreen.dart';
-import 'package:se346_fricial_project/reels/reelScreen.dart';
+import 'package:se346_fricial_project/reels/reel.dart';
 import 'package:se346_fricial_project/search/searching.dart';
 
 import '../utils/colors.dart';
@@ -116,8 +116,14 @@ class _navigationBar extends State<navigationBar>
             required,
             uid: uid,
           ),
-          atReelScreen(),
-          atNotiScreen(),
+          atReelScreen(
+            required,
+            uid: uid,
+          ),
+          atNotificationScreen(
+            required,
+            uid: uid,
+          ),
           atProfileScreen(
             required,
             ownerId: uid,
