@@ -10,30 +10,67 @@ import 'package:iconsax/iconsax.dart';
 ///add constants
 import 'package:se346_fricial_project/constants/colors.dart';
 import 'package:se346_fricial_project/dashboard/dashboardScreen.dart';
+import 'package:se346_fricial_project/models/user.dart';
 import 'package:se346_fricial_project/notification/notificationScreen.dart';
 import 'package:se346_fricial_project/profile/profileScreen.dart';
 import 'package:se346_fricial_project/reels/reelScreen.dart';
-import 'package:se346_fricial_project/search/searchScreen.dart';
+import 'package:se346_fricial_project/search/searching.dart';
 
 import '../utils/colors.dart';
 import '../utils/utils.dart';
 
 class navigationBar extends StatefulWidget {
+  String uid;
+  navigationBar({Key? key, required this.uid}) : super(key: key);
   @override
-  _navigationBar createState() => _navigationBar();
+  _navigationBar createState() => _navigationBar(this.uid);
 }
 
 class _navigationBar extends State<navigationBar>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
+  String uid = '';
   TabController? _tabController;
   var userData = {};
   bool isLoading = false;
+
+  _navigationBar(this.uid);
+  late userModel user = userModel(
+      avatar: '',
+      background: '',
+      email: '',
+      favoriteList: [],
+      fullName: '',
+      id: '',
+      phoneNumber: '',
+      saveList: [],
+      state: '',
+      userName: '',
+      follow: [],
+      role: '',
+      gender: '',
+      dob: '');
+
+  Future getUserDetail() async {
+    FirebaseFirestore.instance
+        .collection("users")
+        .where("userId", isEqualTo: uid)
+        .snapshots()
+        .listen((value) {
+      setState(() {
+        user = userModel.fromDocument(value.docs.first.data());
+      });
+    });
+  }
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 5, vsync: this);
-    getData();
+    User? user = FirebaseAuth.instance.currentUser;
+    final userid = user?.uid.toString();
+    uid = userid!;
+    _tabController = TabController(length: 5, vsync: this);
+    getUserDetail();
   }
 
   @override
@@ -71,11 +108,20 @@ class _navigationBar extends State<navigationBar>
     return Scaffold(
       body: TabBarView(
         children: <Widget>[
-          atDashboardScreen(),
-          atSearchScreen(),
+          atDashboardScreen(
+            required,
+            uid: uid,
+          ),
+          atSearchScreen(
+            required,
+            uid: uid,
+          ),
           atReelScreen(),
           atNotiScreen(),
-          atProfileScreen()
+          atProfileScreen(
+            required,
+            ownerId: uid,
+          )
         ],
         controller: _tabController,
         //onPageChanged: whenPageChanged,
@@ -147,7 +193,9 @@ class _navigationBar extends State<navigationBar>
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(4),
                             child: Image.network(
-                              userData['photoUrl'],
+                              (user.avatar != '')
+                                  ? user.avatar
+                                  : 'https://i.imgur.com/YtZkAbe.jpg',
                             ),
                           ),
                         ),

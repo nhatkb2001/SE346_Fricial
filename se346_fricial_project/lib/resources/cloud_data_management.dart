@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -6,6 +7,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:intl/intl.dart';
 import 'package:se346_fricial_project/resources/storage_methods.dart';
 import 'package:se346_fricial_project/models/user.dart' as model;
+import 'package:se346_fricial_project/utils/utils.dart';
 
 class CloudStoreDataManagement {
   final _collectionName = 'users';
@@ -31,51 +33,56 @@ class CloudStoreDataManagement {
     }
   }
 
-  Future<bool> registerNewUser({
-    required String userName,
-    required String fullname,
-    required Uint8List file,
-    required String bio,
-    required String phone,
-  }) async {
+  Future<bool> registerNewUser(
+      {required String userName,
+      required String fullname,
+      required File file,
+      required String bio,
+      required String phone,
+      context}) async {
     try {
-      final String? _getToken = await FirebaseMessaging.instance.getToken();
-
-      final String currDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
-
-      final String currTime = "${DateFormat('hh:mm a').format(DateTime.now())}";
-
       String photoUrl = await StorageMethods()
           .uploadImageToStorage('profilePics', file, false);
       final String userEmail =
           FirebaseAuth.instance.currentUser!.email.toString();
 
-      model.User _user = model.User(
-        username: userName,
-        uid: _auth.currentUser!.uid,
-        photoUrl: photoUrl,
-        email: userEmail,
-        bio: bio,
-        followers: [],
-        following: [],
-        creation_date: currDate,
-        creation_time: currTime,
-        phone: '',
-        token: _getToken.toString(),
-        total_connections: [],
-        connection_request: [],
-        connections: {},
-        activity: [],
-      );
-
-      await _firestore
-          .collection("users")
-          .doc(_auth.currentUser!.uid)
-          .set(_user.toJson());
-
+      await _firestore.collection("users").doc(_auth.currentUser!.uid).set({
+        'avatar': photoUrl,
+        'email': userEmail,
+        'favoriteList': [],
+        'fullName': fullname,
+        'phonenumber': phone,
+        'saveList': [],
+        'state': '',
+        'userId': _auth.currentUser!.uid,
+        'userName': userName,
+        'role': bio,
+        'gender': '',
+        'follow': [],
+        'dob': ''
+      });
       return true;
-    } catch (e) {
-      print('Error in Register new user: ${e.toString()}');
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case "operation-not-allowed":
+          showSnackBar(context, "Anonymous accounts are not enabled!");
+          break;
+        case "weak-password":
+          showSnackBar(context, "Your password is too weak!");
+          break;
+        case "invalid-email":
+          showSnackBar(context, "Your email is invalid, please check!");
+          break;
+        case "email-already-in-use":
+          showSnackBar(context, "Email is used on different account!");
+          break;
+        case "invalid-credential":
+          showSnackBar(context, "Your email is invalid, please check!");
+          break;
+
+        default:
+          showSnackBar(context, "An undefined Error happened.");
+      }
       return false;
     }
   }

@@ -37,8 +37,6 @@ class MyApp extends StatelessWidget {
       routes: {
         'onboarding': (context) => onboardingWrapper(),
         'signin': (context) => SignInScreen(),
-        'dashboard': (context) => atDashboardScreen(),
-        'navigator': (context) => navigationBar(),
       },
     );
   }

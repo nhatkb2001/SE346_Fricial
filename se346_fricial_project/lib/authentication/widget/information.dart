@@ -1,27 +1,28 @@
 import 'dart:io';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:se346_fricial_project/authentication/signInScreen.dart';
+import 'package:se346_fricial_project/authentication/widget/comomAuthMethod.dart';
+import 'package:se346_fricial_project/resources/cloud_data_management.dart';
 import 'package:se346_fricial_project/utils/colors.dart';
 import 'dart:typed_data';
 
-import '../authentication/widget/comomAuthMethod.dart';
-import '../navigationBar/navigationBar.dart';
-import '../resources/cloud_data_management.dart';
-import '../utils/loading_widget.dart';
-import '../utils/utils.dart';
+import 'package:se346_fricial_project/utils/loading_widget.dart';
+import 'package:se346_fricial_project/utils/utils.dart';
 
-class EditProfileScreen extends StatefulWidget {
-  EditProfileScreen({Key? key}) : super(key: key);
+class InformationScreen extends StatefulWidget {
+  InformationScreen({Key? key}) : super(key: key);
 
   @override
-  State<EditProfileScreen> createState() => _EditProfileScreenState();
+  State<InformationScreen> createState() => _InformationScreenState();
 }
 
-class _EditProfileScreenState extends State<EditProfileScreen> {
+class _InformationScreenState extends State<InformationScreen> {
   bool _isLoading = false;
 
   final GlobalKey<FormState> _infoKey = GlobalKey<FormState>();
@@ -341,15 +342,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               );
 
               if (_userEntryResponse) {
-                msg = 'User data Entry Successfully';
+                msg = 'Please verify your email';
 
                 /// Calling Local Databases Methods To Intitialize Local Database with required MEthods
-                // Navigator.pushAndRemoveUntil(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (_) => navigationBar(required,uid: '',),
-                //     ),
-                //     (route) => false);
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => SignInScreen(),
+                    ),
+                    (route) => false);
               } else
                 msg = 'User Data Not Entry Successfully';
             }

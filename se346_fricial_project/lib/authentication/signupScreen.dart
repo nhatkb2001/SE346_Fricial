@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:se346_fricial_project/authentication/widget/comomAuthMethod.dart';
+import 'package:se346_fricial_project/authentication/widget/information.dart';
 import 'package:se346_fricial_project/resources/sign_up_auth.dart';
 import 'package:se346_fricial_project/utils/colors.dart';
 import 'package:se346_fricial_project/utils/enum_generation.dart';
@@ -416,7 +417,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => EditProfileScreen(),
+                  builder: (_) => InformationScreen(),
                 ),
               );
             } else {

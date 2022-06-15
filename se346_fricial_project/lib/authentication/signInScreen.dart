@@ -1,4 +1,5 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -30,6 +31,7 @@ class _SignInScreenState extends State<SignInScreen> {
   final EmailAndPasswordAuth _emailAndPasswordAuth = EmailAndPasswordAuth();
   bool isHiddenPassword = true;
   bool _isLoading = false;
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -353,10 +355,14 @@ class _SignInScreenState extends State<SignInScreen> {
 
             String msg = '';
             if (emailSignInResults == EmailSignInResults.SignInCompleted) {
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (_) => navigationBar()),
-                  (route) => false);
+              final User? user = auth.currentUser;
+              final uid = user?.uid;
+              if (uid != null) {
+                await Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (_) => navigationBar(uid: uid)),
+                    (route) => false);
+              }
             } else if (emailSignInResults ==
                 EmailSignInResults.EmailNotVerified) {
               msg =
