@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,33 +6,27 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
 
-///add constants
 import 'package:intl/intl.dart';
 import 'package:se346_fricial_project/constants/colors.dart';
-import 'package:se346_fricial_project/models/commentModel.dart';
+import 'package:se346_fricial_project/models/commentReelModel.dart';
 import 'package:se346_fricial_project/models/user.dart';
 
-class atCommentScreen extends StatefulWidget {
+class atCommentReelScreen extends StatefulWidget {
   String uid;
-  String ownerId;
-  String postId;
-  atCommentScreen(required,
-      {Key? key,
-      required this.uid,
-      required this.ownerId,
-      required this.postId})
+  String reelId;
+  atCommentReelScreen(required,
+      {Key? key, required this.uid, required this.reelId})
       : super(key: key);
 
   @override
-  _atCommentScreen createState() => _atCommentScreen(uid, ownerId, postId);
+  _atCommentReelScreen createState() => _atCommentReelScreen(uid, reelId);
 }
 
-class _atCommentScreen extends State<atCommentScreen>
+class _atCommentReelScreen extends State<atCommentReelScreen>
     with SingleTickerProviderStateMixin {
   String uid = '';
-  String ownerId = '';
-  String postId = '';
-  _atCommentScreen(this.uid, this.ownerId, this.postId);
+  String reelId = '';
+  _atCommentReelScreen(this.uid, this.reelId);
 
   late userModel user = userModel(
       avatar: '',
@@ -66,64 +59,43 @@ class _atCommentScreen extends State<atCommentScreen>
   TextEditingController commentController = TextEditingController();
   GlobalKey<FormState> commentFormKey = GlobalKey<FormState>();
 
-  List<commentModel> commentList = [];
+  List<commentReelModel> commentList = [];
 
   Future getCommentList() async {
     FirebaseFirestore.instance
-        .collection('posts')
-        .doc(postId)
+        .collection('reels')
+        .doc(reelId)
         .collection('comments')
         .snapshots()
         .listen((value) {
       setState(() {
         commentList.clear();
         value.docs.forEach((element) {
-          commentList.add(commentModel.fromDocument(element.data()));
+          commentList.add(commentReelModel.fromDocument(element.data()));
         });
       });
     });
   }
 
-  Future comment(String postId) async {
+  Future comment(String reelId) async {
     FirebaseFirestore.instance
-        .collection('posts')
-        .doc(postId)
+        .collection('reels')
+        .doc(reelId)
         .collection('comments')
         .add({
       'userId': uid,
       'ownerUsername': user.userName,
       'ownerAvatar': user.avatar,
-      'postId': postId,
+      'reelId': reelId,
       'content': commentController.text,
       'state': 'show',
       'time': DateFormat('yMMMMd').format(DateTime.now()).toString()
-    }).then((value) {
-      FirebaseFirestore.instance
-          .collection('posts')
-          .doc(postId)
-          .collection('comments')
-          .doc(value.id)
-          .update({'id': value.id});
-      if (uid != ownerId) {
-        FirebaseFirestore.instance.collection('notifies').add({
-          'idSender': uid,
-          'idReceiver': ownerId,
-          'avatarSender': user.avatar,
-          'mode': 'public',
-          'idPost': postId,
-          'content': 'comment on your photo',
-          'category': 'comment',
-          'nameSender': user.userName,
-          'timeCreate': "${DateFormat('hh:mm a').format(DateTime.now())}",
-          'detailTimeCreate': DateTime.now()
-        }).then((value) {
-          FirebaseFirestore.instance
-              .collection('notifies')
-              .doc(value.id)
-              .update({'id': value.id});
-        });
-      }
-    });
+    }).then((value) => FirebaseFirestore.instance
+            .collection('reels')
+            .doc(reelId)
+            .collection('comments')
+            .doc(value.id)
+            .update({'id': value.id}));
   }
 
   @override
@@ -133,7 +105,7 @@ class _atCommentScreen extends State<atCommentScreen>
     final userid = user?.uid.toString();
     uid = userid!;
     getUserDetail();
-    print('Day la :' + postId);
+    print('Day la :' + reelId);
     getCommentList();
   }
 
@@ -153,7 +125,7 @@ class _atCommentScreen extends State<atCommentScreen>
             body: Stack(children: [
           Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: white,
             ),
           ),
           SingleChildScrollView(
@@ -173,11 +145,11 @@ class _atCommentScreen extends State<atCommentScreen>
                           ),
                           SizedBox(width: 32),
                           Container(
-                            alignment: Alignment.topLeft,
+                            alignment: Alignment.topCenter,
                             child: Text(
                               'Comment',
                               style: TextStyle(
-                                  fontFamily: 'Poppins',
+                                  fontFamily: 'Recoleta',
                                   fontSize: 32,
                                   fontWeight: FontWeight.w500,
                                   color: black),
@@ -188,6 +160,7 @@ class _atCommentScreen extends State<atCommentScreen>
                             child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
+                              SizedBox(height: 32),
                               Container(
                                 height: 640,
                                 child: ListView.separated(
@@ -234,7 +207,7 @@ class _atCommentScreen extends State<atCommentScreen>
                                                         .ownerUsername,
                                                     style: TextStyle(
                                                         fontSize: 16,
-                                                        fontFamily: 'Poppins',
+                                                        fontFamily: 'Urbanist',
                                                         fontWeight:
                                                             FontWeight.w600,
                                                         color: black),
@@ -265,7 +238,7 @@ class _atCommentScreen extends State<atCommentScreen>
                                                     text: commentList[index]
                                                         .content,
                                                     style: TextStyle(
-                                                        fontFamily: "Poppins",
+                                                        fontFamily: "Urbanist",
                                                         fontSize: 16.0,
                                                         color: black,
                                                         fontWeight:
@@ -287,57 +260,82 @@ class _atCommentScreen extends State<atCommentScreen>
                               SizedBox(height: 24),
                               Container(
                                 height: 54,
+                                alignment: Alignment.center,
                                 padding: EdgeInsets.only(left: 24, right: 24),
                                 decoration: BoxDecoration(
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(16.0)),
+                                      BorderRadius.all(Radius.circular(24.0)),
                                   color: gray,
                                 ),
                                 child: Row(
                                   children: <Widget>[
                                     // SizedBox(width: 16),
+                                    Expanded(
+                                        child: Form(
+                                      key: commentFormKey,
+                                      child: TextField(
+                                          controller: commentController,
+                                          // onChanged: (value) => setState(() {
+                                          //       comment = value;
+                                          //     }),
+                                          onEditingComplete: () {
+                                            setState(() {
+                                              commentController.clear();
+                                            });
+                                          },
+                                          decoration: InputDecoration(
+                                            border: InputBorder.none,
+                                            hintStyle: TextStyle(
+                                              fontFamily: 'Urbanist',
+                                              fontSize: 14,
+                                              color: black,
+                                            ),
+                                            hintText: "Type your comment...",
+                                          )),
+                                    )),
+                                    SizedBox(width: 20),
                                     Container(
-                                      width: 241,
-                                      child: Expanded(
-                                          child: Form(
-                                        key: commentFormKey,
-                                        child: TextField(
-                                            controller: commentController,
-                                            // onChanged: (value) => setState(() {
-                                            //       comment = value;
-                                            //     }),
-                                            onEditingComplete: () {
-                                              setState(() {
-                                                commentController.clear();
-                                              });
-                                            },
-                                            decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              hintStyle: TextStyle(
-                                                fontFamily: 'Poppins',
-                                                fontSize: 14,
-                                                color: black,
-                                              ),
-                                              hintText: "Type your comment...",
-                                            )),
-                                      )),
-                                    ),
-                                    Spacer(),
-                                    Container(
-                                        margin: EdgeInsets.only(right: 8),
-                                        // padding: EdgeInsets.zero,
+                                      child: AnimatedContainer(
                                         alignment: Alignment.center,
-                                        child: IconButton(
-                                            icon: Icon(Iconsax.send1),
-                                            iconSize: 24,
-                                            color: white,
-                                            onPressed: () {
-                                              setState(() {
-                                                comment(postId);
-                                                commentController.clear();
-                                              });
-                                              setState(() {});
-                                            })),
+                                        duration: Duration(milliseconds: 300),
+                                        height: 32,
+                                        width: 32,
+                                        decoration: BoxDecoration(
+                                          color: Colors.transparent,
+                                          borderRadius:
+                                              BorderRadius.circular(24),
+                                          // boxShadow: [
+                                          //   BoxShadow(
+                                          //     color: black.withOpacity(0.25),
+                                          //     spreadRadius: 0,
+                                          //     blurRadius: 64,
+                                          //     offset: Offset(8, 8),
+                                          //   ),
+                                          //   BoxShadow(
+                                          //     color: black.withOpacity(0.2),
+                                          //     spreadRadius: 0,
+                                          //     blurRadius: 4,
+                                          //     offset: Offset(0, 4),
+                                          //   ),
+                                          // ],
+                                        ),
+                                        child: Container(
+                                            margin: EdgeInsets.only(right: 8),
+                                            // padding: EdgeInsets.zero,
+                                            alignment: Alignment.center,
+                                            child: IconButton(
+                                                icon: Icon(Iconsax.send1),
+                                                iconSize: 18,
+                                                color: white,
+                                                onPressed: () {
+                                                  setState(() {
+                                                    comment(reelId);
+                                                    commentController.clear();
+                                                  });
+                                                  setState(() {});
+                                                })),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),

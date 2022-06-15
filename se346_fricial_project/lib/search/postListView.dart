@@ -226,6 +226,8 @@ class _postListView extends State<postListView> {
                                                       required,
                                                       uid:
                                                           widget.uid.toString(),
+                                                      ownerId: postList[index]
+                                                          .idUser,
                                                       postId:
                                                           postList[index].id,
                                                     ))));

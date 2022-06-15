@@ -128,7 +128,8 @@ class _atDashboardScreen extends State<atDashboardScreen>
             'content': 'liked your photo',
             'category': 'like',
             'nameSender': user.userName,
-            'timeCreate': "${DateFormat('hh:mm a').format(DateTime.now())}"
+            'timeCreate': "${DateFormat('hh:mm a').format(DateTime.now())}",
+            'detailTimeCreate': DateTime.now()
           }).then((value) {
             FirebaseFirestore.instance
                 .collection('notifies')
@@ -533,12 +534,12 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                             context,
                                             MaterialPageRoute(
                                                 builder: ((context) =>
-                                                    atCommentScreen(
-                                                      required,
-                                                      uid: uid,
-                                                      postId:
-                                                          postList[index].id,
-                                                    ))));
+                                                    atCommentScreen(required,
+                                                        uid: uid,
+                                                        ownerId: postList[index]
+                                                            .idUser,
+                                                        postId: postList[index]
+                                                            .id))));
                                       },
                                       icon: Container(
                                         child: Icon(Iconsax.message_text,

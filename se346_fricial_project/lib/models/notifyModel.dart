@@ -13,6 +13,7 @@ class notifyModel {
   final String avatarSender;
   final String nameSender;
   final String timeCreate;
+  final String detailTimeCreate;
 
   notifyModel(
       {required this.id,
@@ -24,6 +25,7 @@ class notifyModel {
       required this.category,
       required this.content,
       required this.timeCreate,
+      required this.detailTimeCreate,
       required this.nameSender});
 
   factory notifyModel.fromDocument(Map<String, dynamic> doc) {
@@ -37,6 +39,7 @@ class notifyModel {
         category: doc['category'],
         content: doc['content'],
         timeCreate: doc['timeCreate'],
+        detailTimeCreate: doc['detailTimeCreate'],
         nameSender: doc['nameSender']);
   }
 }
