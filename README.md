@@ -1,2 +1,3 @@
 # SE346_Fricial
-SE346 Project about Fricial.
+Kể từ năm 2019 tới ngày nay là những năm đầy biến động khi dịch bệnh tiếp tục hoành hành trên toàn cầu với những biến chủng mới, gây ra mức độ lây nhiễm mạnh và số người chết tăng cao. Có lẽ đó là lý do mà các ứng dụng về mạng xã hội và ứng dụng mua sắm đã chiếm số đông. Nhờ vậy mà các nhà kinh doanh lớn nhỏ đều có khả năng phát triển mà không sợ bị dịch bệnh làm cho trì hoãn. Ứng dụng mạng xã hội, là nơi chúng ta có thể đăng tải các nội dung như hình ảnh hoặc video về sản phẩm theo lối sáng tạo và thu hút người truy cập. Nhận thấy được nhu cầu trên, nhóm tụi mình đã quyết định chọn đề tài “XÂY DỰNG ỨNG DỤNG MẠNG XÃ HỘI” 
+
