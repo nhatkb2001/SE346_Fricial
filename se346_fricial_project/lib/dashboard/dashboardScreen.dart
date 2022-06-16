@@ -17,6 +17,7 @@ import 'package:se346_fricial_project/constants/colors.dart';
 import 'package:se346_fricial_project/dashboard/comment.dart';
 import 'package:se346_fricial_project/dashboard/createPost.dart';
 import 'package:se346_fricial_project/dashboard/postVideo.dart';
+import 'package:se346_fricial_project/messages/messagesCenter.dart';
 import 'package:se346_fricial_project/models/postModel.dart';
 import 'package:se346_fricial_project/models/user.dart';
 import 'package:se346_fricial_project/profile/profileScreen.dart';
@@ -129,7 +130,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
             'category': 'like',
             'nameSender': user.userName,
             'timeCreate': "${DateFormat('hh:mm a').format(DateTime.now())}",
-            'detailTimeCreate': DateTime.now()
+            'detailTimeCreate': "${DateTime.now()}"
           }).then((value) {
             FirebaseFirestore.instance
                 .collection('notifies')
@@ -170,7 +171,10 @@ class _atDashboardScreen extends State<atDashboardScreen>
             children: [
               Container(
                 decoration: BoxDecoration(
-                  color: pink,
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/Fricial_background.png'),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               Container(
@@ -182,12 +186,12 @@ class _atDashboardScreen extends State<atDashboardScreen>
                     Container(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        user.userName,
+                        'Fricial',
                         style: TextStyle(
-                          fontFamily: 'Poppins',
+                          fontFamily: 'Recoleta',
                           fontSize: 24,
                           fontWeight: FontWeight.w600,
-                          color: black,
+                          color: white,
                         ),
                       ),
                     ),
@@ -215,14 +219,14 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                     color: Colors.transparent,
                                     borderRadius: BorderRadius.circular(8),
                                     border: Border.all(
-                                      color: Colors.black,
+                                      color: Colors.white,
                                       width: 1.5,
                                     )),
                                 child: Container(
                                     padding: EdgeInsets.zero,
                                     alignment: Alignment.center,
                                     child: Icon(Iconsax.add,
-                                        size: 16, color: black)),
+                                        size: 16, color: white)),
                               ),
                             )),
                         SizedBox(width: 16),
@@ -230,18 +234,18 @@ class _atDashboardScreen extends State<atDashboardScreen>
                           alignment: Alignment.topRight,
                           child: GestureDetector(
                             onTap: () {
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //       builder: (context) =>
-                              //           messsageScreen(required, uid: uid)),
-                              // );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        messsageScreen(required, uid: uid)),
+                              );
                             },
                             child: Container(
                                 padding: EdgeInsets.zero,
                                 alignment: Alignment.topRight,
                                 child: Icon(Iconsax.message,
-                                    size: 24, color: black)),
+                                    size: 24, color: white)),
                           ),
                         ),
                       ],
@@ -338,7 +342,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                               fontSize: 12,
                                               fontFamily: 'Poppins',
                                               fontWeight: FontWeight.w500,
-                                              color: black),
+                                              color: white),
                                         ))
                                       ],
                                     ),
@@ -354,7 +358,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                     //             height: 56,
                                     //             decoration: BoxDecoration(
                                     //                 border: Border.all(
-                                    //                   color:black,
+                                    //                   color:white,
                                     //                   width: 1.5,
                                     //                 ),
                                     //                 borderRadius:
@@ -383,7 +387,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                     //           fontSize: 12,
                                     //           fontFamily: 'Poppins',
                                     //           fontWeight: FontWeight.w500,
-                                    //           color: black),
+                                    //           color: white),
                                     //     ))
                                     //   ],
                                     // ),
@@ -443,7 +447,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                                 fontSize: 16,
                                                 fontFamily: 'Poppins',
                                                 fontWeight: FontWeight.w600,
-                                                color: black),
+                                                color: white),
                                           ))
                                         ],
                                       ),
@@ -453,7 +457,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                       padding: EdgeInsets.all(8),
                                       alignment: Alignment.topRight,
                                       child: Icon(Iconsax.more,
-                                          size: 24, color: black),
+                                          size: 24, color: white),
                                     )
                                   ],
                                 ),
@@ -462,6 +466,22 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                   ? Container(
                                       width: 360,
                                       height: 340,
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: white.withOpacity(0.1),
+                                            spreadRadius: 0,
+                                            blurRadius: 64,
+                                            offset: Offset(8, 8),
+                                          ),
+                                          // BoxShadow(
+                                          //   color: white.withOpacity(0.2),
+                                          //   spreadRadius: 0,
+                                          //   blurRadius: 4,
+                                          //   offset: Offset(0, 4),
+                                          // ),
+                                        ],
+                                      ),
                                       padding:
                                           EdgeInsets.only(top: 8, bottom: 16),
                                       child: ClipRRect(
@@ -503,7 +523,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                                     EdgeInsets.only(left: 8),
                                                 alignment: Alignment.topRight,
                                                 child: Icon(Iconsax.like_1,
-                                                    size: 24, color: black),
+                                                    size: 24, color: white),
                                               )),
                                     GestureDetector(
                                       onTap: () {
@@ -521,7 +541,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                                     .toString(),
                                             style: TextStyle(
                                               fontSize: 16,
-                                              color: black,
+                                              color: white,
                                               fontFamily: 'Poppins',
                                               fontWeight: FontWeight.w600,
                                             ),
@@ -543,7 +563,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                       },
                                       icon: Container(
                                         child: Icon(Iconsax.message_text,
-                                            size: 24, color: black),
+                                            size: 24, color: white),
                                       ),
                                     ),
                                     // Container(
@@ -553,7 +573,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                     //       '24',
                                     //       style: TextStyle(
                                     //         fontSize: 16,
-                                    //         color: black,
+                                    //         color: white,
                                     //         fontFamily: 'Poppins',
                                     //         fontWeight: FontWeight.w600,
                                     //       ),
@@ -579,7 +599,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                                     child: Icon(
                                                         Iconsax.volume_high,
                                                         size: 24,
-                                                        color: black),
+                                                        color: white),
                                                   ))
                                         : Container(
                                             decoration: BoxDecoration(
@@ -601,7 +621,7 @@ class _atDashboardScreen extends State<atDashboardScreen>
                                       postList[index].caption,
                                       style: TextStyle(
                                           fontSize: 16,
-                                          color: black,
+                                          color: white,
                                           fontFamily: 'Poppins',
                                           fontWeight: FontWeight.w600,
                                           overflow: TextOverflow.ellipsis),

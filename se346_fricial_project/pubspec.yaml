@@ -89,6 +89,86 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+  fonts:
+    - family: Recoleta
+      fonts:
+        - asset: assets/fonts/Recoleta/Recoleta-Thin.ttf
+          style: normal
+          weight: 100
+        - asset: assets/fonts/Recoleta/Recoleta-Light.ttf
+          style: normal
+          weight: 300
+        - asset: assets/fonts/Recoleta/Recoleta-Regular.ttf
+          style: normal
+          weight: 400
+        - asset: assets/fonts/Recoleta/Recoleta-Medium.ttf
+          style: normal
+          weight: 500
+        - asset: assets/fonts/Recoleta/Recoleta-SemiBold.ttf
+          style: normal
+          weight: 600
+        - asset: assets/fonts/Recoleta/Recoleta-Bold.ttf
+          style: normal
+          weight: 700
+        - asset: assets/fonts/Recoleta/Recoleta-Black.ttf
+          style: normal
+          weight: 900
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/poppins/Poppins-Thin.ttf
+          style: normal
+          weight: 100
+        - asset: assets/fonts/poppins/Poppins-ThinItalic.ttf
+          style: italic
+          weight: 100
+        - asset: assets/fonts/poppins/Poppins-ExtraLight.ttf
+          style: normal
+          weight: 200
+        - asset: assets/fonts/poppins/Poppins-ExtraLightItalic.ttf
+          style: italic
+          weight: 200
+        - asset: assets/fonts/poppins/Poppins-Light.ttf
+          style: normal
+          weight: 300
+        - asset: assets/fonts/poppins/Poppins-LightItalic.ttf
+          style: italic
+          weight: 300
+        - asset: assets/fonts/poppins/Poppins-Regular.ttf
+          style: normal
+          weight: 400
+        - asset: assets/fonts/poppins/Poppins-Italic.ttf
+          style: italic
+          weight: 400
+        - asset: assets/fonts/poppins/Poppins-Medium.ttf
+          style: normal
+          weight: 500
+        - asset: assets/fonts/poppins/Poppins-MediumItalic.ttf
+          style: italic
+          weight: 500
+        - asset: assets/fonts/poppins/Poppins-SemiBold.ttf
+          style: normal
+          weight: 600
+        - asset: assets/fonts/poppins/Poppins-SemiBoldItalic.ttf
+          style: italic
+          weight: 600
+        - asset: assets/fonts/poppins/Poppins-Bold.ttf
+          style: normal
+          weight: 700
+        - asset: assets/fonts/poppins/Poppins-BoldItalic.ttf
+          style: italic
+          weight: 700
+        - asset: assets/fonts/poppins/Poppins-ExtraBold.ttf
+          style: normal
+          weight: 800
+        - asset: assets/fonts/poppins/Poppins-ExtraBoldItalic.ttf
+          style: italic
+          weight: 800
+        - asset: assets/fonts/poppins/Poppins-Black.ttf
+          style: normal
+          weight: 900
+        - asset: assets/fonts/poppins/Poppins-BlackItalic.ttf
+          style: italic
+          weight: 900
   # To add assets to your application, add an assets section, like this:
   
   #   - images/a_dot_ham.jpeg

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -40,6 +41,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     _username.dispose();
     _phone.dispose();
     _bio.dispose();
+  }
+
+  pickImage(ImageSource source) async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+      allowCompression: false,
+    );
+    print('result');
+    print(result);
+    if (result != null) {
+      Uint8List? fileBytes = result.files.first.bytes;
+      String fileName = result.files.first.name;
+      return File(result.files.first.path.toString());
+    }
+    print('No Image Selected');
   }
 
   selectImage() async {

@@ -74,28 +74,24 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
   late DateTime date = DateTime.now();
   Future sendMessage() async {
     if (messageController.text.isNotEmpty) {
-      FirebaseFirestore.instance.collection("contents").add({
-        'content': messageController.text,
-        'sendBy': uid,
-        'messageId': messagesId,
-        'timeSend': "${DateFormat('hh:mm a').format(DateTime.now())}",
-        'timeSendDetail': "$date"
-      }).then((value) {
-        FirebaseFirestore.instance
-            .collection("messages")
-            .doc(messagesId)
-            .update({
-          'contentList': FieldValue.arrayUnion([value.id]),
-        });
-        FirebaseFirestore.instance.collection("contents").doc(value.id).update({
-          'contentId': value.id,
-        });
-      });
       FirebaseFirestore.instance.collection("messages").doc(messagesId).update({
         'lastMessage': messageController.text,
         'lastTimeSend': "${DateFormat('hh:mm a').format(DateTime.now())}",
       });
+      FirebaseFirestore.instance.collection("contents").add({
+        'content': messageController.text,
+        'sendBy': uid,
+        'messageId': messagesId,
+        'contentList': [],
+        'timeSend': "${DateFormat('hh:mm a').format(DateTime.now())}",
+        'timeSendDetail': "$date"
+      }).then((value) {
+        FirebaseFirestore.instance.collection("contents").doc(value.id).update({
+          'contentId': value.id,
+        });
+      });
     }
+    messageController.clear();
   }
 
   late List contentList;
@@ -103,23 +99,15 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
 
   Future getMessage2() async {
     FirebaseFirestore.instance
-        .collection("messages")
-        .doc(messagesId)
+        .collection("contents")
+        .orderBy('timeSendDetail', descending: false)
+        .where('messageId', isEqualTo: messagesId)
         .snapshots()
-        .listen((value1) {
-      FirebaseFirestore.instance
-          .collection("contents")
-          .orderBy('timeSendDetail', descending: false)
-          .snapshots()
-          .listen((value2) {
-        setState(() {
-          chatting.clear();
-          contentList = value1.data()!["contentList"];
-          value2.docs.forEach((element) {
-            if (contentList.contains(element.data()['contentId'] as String)) {
-              chatting.add(Content.fromDocument(element.data()));
-            }
-          });
+        .listen((value) {
+      setState(() {
+        chatting.clear();
+        value.docs.forEach((element) {
+          chatting.add(Content.fromDocument(element.data()));
         });
       });
     });
@@ -137,7 +125,12 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(color: pink),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/Fricial_background.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
           Container(
             // scrollDirection: Axis.vertical,
@@ -155,7 +148,7 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                         Navigator.pop(context);
                       },
                       icon: Icon(Iconsax.arrow_square_left,
-                          size: 28, color: black),
+                          size: 28, color: white),
                     ),
                     Spacer(),
                     Container(
@@ -176,17 +169,17 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                             height: 32,
                             width: 32,
                             decoration: BoxDecoration(
-                              color: black,
+                              color: white,
                               borderRadius: BorderRadius.circular(8),
                               boxShadow: [
                                 BoxShadow(
-                                  color: black.withOpacity(0.25),
+                                  color: white.withOpacity(0.25),
                                   spreadRadius: 0,
                                   blurRadius: 64,
                                   offset: Offset(8, 8),
                                 ),
                                 BoxShadow(
-                                  color: black.withOpacity(0.2),
+                                  color: white.withOpacity(0.2),
                                   spreadRadius: 0,
                                   blurRadius: 4,
                                   offset: Offset(0, 4),
@@ -197,7 +190,7 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                                 padding: EdgeInsets.zero,
                                 alignment: Alignment.center,
                                 child:
-                                    Icon(Iconsax.call, size: 18, color: white)),
+                                    Icon(Iconsax.call, size: 18, color: black)),
                           ),
                         )),
                     SizedBox(width: 8),
@@ -220,17 +213,17 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                             height: 32,
                             width: 32,
                             decoration: BoxDecoration(
-                              color: black,
+                              color: white,
                               borderRadius: BorderRadius.circular(8),
                               boxShadow: [
                                 BoxShadow(
-                                  color: black.withOpacity(0.25),
+                                  color: white.withOpacity(0.25),
                                   spreadRadius: 0,
                                   blurRadius: 64,
                                   offset: Offset(8, 8),
                                 ),
                                 BoxShadow(
-                                  color: black.withOpacity(0.2),
+                                  color: white.withOpacity(0.2),
                                   spreadRadius: 0,
                                   blurRadius: 4,
                                   offset: Offset(0, 4),
@@ -241,7 +234,7 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                                 padding: EdgeInsets.zero,
                                 alignment: Alignment.center,
                                 child: Icon(Iconsax.video,
-                                    size: 18, color: white)),
+                                    size: 18, color: black)),
                           ),
                         )),
                   ],
@@ -254,7 +247,7 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                     style: TextStyle(
                         fontFamily: "Poppins",
                         fontSize: 24.0,
-                        color: black,
+                        color: white,
                         fontWeight: FontWeight.w600),
                   ),
                 ),
@@ -272,7 +265,7 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Container(
-                            height: 530,
+                            height: 530 + 100 - 24,
                             child: SingleChildScrollView(
                                 scrollDirection: Axis.vertical,
                                 child: Column(
@@ -439,13 +432,14 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                                     ),
                                   ],
                                 ))),
-                        SizedBox(height: 100),
+                        SizedBox(height: 16),
                         Container(
                           height: 54,
-                          width: 319,
+                          width: 319 + 32,
                           alignment: Alignment.center,
                           margin: EdgeInsets.only(left: 28, right: 28),
                           decoration: BoxDecoration(
+                            border: Border.all(color: gray),
                             borderRadius:
                                 BorderRadius.all(Radius.circular(24.0)),
                             color: Colors.transparent,
@@ -480,13 +474,14 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                               )),
                               SizedBox(width: 20),
                               Container(
+                                margin: EdgeInsets.only(right: 8),
                                 child: AnimatedContainer(
                                   alignment: Alignment.center,
                                   duration: Duration(milliseconds: 300),
                                   height: 32,
                                   width: 32,
                                   decoration: BoxDecoration(
-                                    color: Colors.transparent,
+                                    color: gray,
                                     borderRadius: BorderRadius.circular(24),
                                     boxShadow: [
                                       BoxShadow(
@@ -504,7 +499,6 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                                     ],
                                   ),
                                   child: Container(
-                                      margin: EdgeInsets.only(right: 8),
                                       // padding: EdgeInsets.zero,
                                       alignment: Alignment.center,
                                       child: IconButton(
@@ -515,7 +509,6 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                                             setState(() {
                                               sendMessage();
                                               getMessage2();
-                                              messageController.clear();
                                             });
                                             setState(() {});
                                           })),

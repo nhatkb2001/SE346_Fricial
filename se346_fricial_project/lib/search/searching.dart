@@ -93,7 +93,10 @@ class _atSearchScreen extends State<atSearchScreen>
             body: Stack(children: [
           Container(
             decoration: BoxDecoration(
-              color: pink,
+              image: DecorationImage(
+                image: AssetImage('assets/images/Fricial_background.png'),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           Container(
@@ -126,18 +129,14 @@ class _atSearchScreen extends State<atSearchScreen>
                           },
                           decoration: InputDecoration(
                             prefixIcon: Container(
-                                child: Stack(
-                                    alignment: Alignment.center,
-                                    children: [
-                                  Icon(Iconsax.search_normal_1,
-                                      size: 20, color: black)
-                                ])),
+                                child: Icon(Iconsax.search_normal_1,
+                                    size: 20, color: black)),
                             border: InputBorder.none,
                             hintText: "What are you looking for?",
                             hintStyle: TextStyle(
                                 fontFamily: 'Poppins',
                                 fontSize: 14,
-                                color: blue,
+                                color: black,
                                 fontWeight: FontWeight.w400),
                           )),
                     ),
