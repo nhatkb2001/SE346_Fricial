@@ -37,18 +37,29 @@ class _atSearchScreen extends State<atSearchScreen>
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String search = '';
   List<userModel> userList = [];
+  List<postModel> postListCaption = [];
   Future searchUserName() async {
-    FirebaseFirestore.instance
-        .collection("users")
-        .where("userName", isGreaterThanOrEqualTo: search)
-        .snapshots()
-        .listen((value) {
+    FirebaseFirestore.instance.collection("posts").snapshots().listen((value) {
       setState(() {
-        userList.clear();
+        postListCaption.clear();
+        postList.clear();
         value.docs.forEach((element) {
-          userList.add(userModel.fromDocument(element.data()));
+          postListCaption.add(postModel.fromDocument(element.data()));
         });
-        print(userList.length);
+
+        postListCaption.forEach((element) {
+          print(
+              (element.caption.toUpperCase().contains(search.toUpperCase())) ==
+                  true);
+          if (((element.caption + " ")
+                  .toUpperCase()
+                  .contains(search.toUpperCase())) ==
+              true) {
+            postList.add(element);
+            print(postList.length);
+          }
+        });
+        if (postList.isEmpty) {}
       });
     });
   }

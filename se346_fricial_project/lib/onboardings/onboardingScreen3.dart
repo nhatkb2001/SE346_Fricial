@@ -23,7 +23,7 @@ class onboardingScreen3 extends StatelessWidget {
             Container(
               alignment: Alignment.topCenter,
               child: Lottie.network(
-                  'https://assets8.lottiefiles.com/packages/lf20_x4b078j8.json'),
+                  'https://assets9.lottiefiles.com/packages/lf20_zboivc9e.json'),
             ),
             SizedBox(
               height: 40,
