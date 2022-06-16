@@ -74,24 +74,29 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
   late DateTime date = DateTime.now();
   Future sendMessage() async {
     if (messageController.text.isNotEmpty) {
-      FirebaseFirestore.instance.collection("messages").doc(messagesId).update({
-        'lastMessage': messageController.text,
-        'lastTimeSend': "${DateFormat('hh:mm a').format(DateTime.now())}",
-      });
       FirebaseFirestore.instance.collection("contents").add({
         'content': messageController.text,
         'sendBy': uid,
         'messageId': messagesId,
-        'contentList': [],
         'timeSend': "${DateFormat('hh:mm a').format(DateTime.now())}",
         'timeSendDetail': "$date"
       }).then((value) {
+        FirebaseFirestore.instance
+            .collection("messages")
+            .doc(messagesId)
+            .update({
+          'contentList': FieldValue.arrayUnion([value.id]),
+        });
         FirebaseFirestore.instance.collection("contents").doc(value.id).update({
           'contentId': value.id,
         });
       });
+      FirebaseFirestore.instance.collection("messages").doc(messagesId).update({
+        'lastMessage': messageController.text,
+        'lastTimeSend': "${DateFormat('hh:mm a').format(DateTime.now())}",
+      });
+      messageController.clear();
     }
-    messageController.clear();
   }
 
   late List contentList;
@@ -99,15 +104,23 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
 
   Future getMessage2() async {
     FirebaseFirestore.instance
-        .collection("contents")
-        .orderBy('timeSendDetail', descending: false)
-        .where('messageId', isEqualTo: messagesId)
+        .collection("messages")
+        .doc(messagesId)
         .snapshots()
-        .listen((value) {
-      setState(() {
-        chatting.clear();
-        value.docs.forEach((element) {
-          chatting.add(Content.fromDocument(element.data()));
+        .listen((value1) {
+      FirebaseFirestore.instance
+          .collection("contents")
+          .orderBy('timeSendDetail', descending: false)
+          .snapshots()
+          .listen((value2) {
+        setState(() {
+          chatting.clear();
+          contentList = value1.data()!["contentList"];
+          value2.docs.forEach((element) {
+            if (contentList.contains(element.data()['contentId'] as String)) {
+              chatting.add(Content.fromDocument(element.data()));
+            }
+          });
         });
       });
     });
