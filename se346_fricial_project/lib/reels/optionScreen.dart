@@ -187,7 +187,7 @@ class _OptionScreenState extends State<OptionScreen> {
                                       fontSize: 16,
                                       fontFamily: 'Urbanist',
                                       fontWeight: FontWeight.w600,
-                                      color: blue),
+                                      color: white),
                                 ))
                           ],
                         ),
@@ -202,7 +202,7 @@ class _OptionScreenState extends State<OptionScreen> {
                                 fontFamily: 'Urbanist',
                                 fontWeight: FontWeight.w600,
                                 overflow: TextOverflow.ellipsis,
-                                color: blue),
+                                color: white),
                             maxLines: 1,
                           )),
                       SizedBox(height: 8),

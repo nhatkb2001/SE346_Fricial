@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -30,7 +31,7 @@ class _InformationScreenState extends State<InformationScreen> {
   final TextEditingController _username = TextEditingController();
   final TextEditingController _phone = TextEditingController();
   final TextEditingController _bio = TextEditingController();
-  late File? _image;
+  File? _image;
   final CloudStoreDataManagement _cloudStoreDataManagement =
       CloudStoreDataManagement();
 
@@ -41,6 +42,21 @@ class _InformationScreenState extends State<InformationScreen> {
     _username.dispose();
     _phone.dispose();
     _bio.dispose();
+  }
+
+  pickImage(ImageSource source) async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+      allowCompression: false,
+    );
+    print('result');
+    print(result);
+    if (result != null) {
+      Uint8List? fileBytes = result.files.first.bytes;
+      String fileName = result.files.first.name;
+      return File(result.files.first.path.toString());
+    }
+    print('No Image Selected');
   }
 
   selectImage() async {

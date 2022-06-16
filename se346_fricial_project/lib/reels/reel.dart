@@ -76,6 +76,14 @@ class _atReelScreen extends State<atReelScreen>
         child: Stack(
           fit: StackFit.expand,
           children: [
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/Fricial_background.png'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
             Swiper(
               itemBuilder: (BuildContext context, int index) {
                 return ContentScreen(

@@ -184,7 +184,12 @@ class _messsageScreenState extends State<messsageScreen> {
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(color: pink),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/Fricial_background.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
           Container(
             child: Column(
@@ -203,7 +208,7 @@ class _messsageScreenState extends State<messsageScreen> {
                           Navigator.pop(context);
                         },
                         icon: Icon(Iconsax.arrow_square_left,
-                            size: 24, color: black),
+                            size: 24, color: white),
                       ),
                       SizedBox(width: 6),
                       // Container(
@@ -224,11 +229,11 @@ class _messsageScreenState extends State<messsageScreen> {
                           Container(
                               alignment: Alignment.topLeft,
                               child: Text(
-                                currentUser.userName,
+                                "Messages",
                                 style: TextStyle(
                                     fontSize: 18,
                                     fontFamily: 'Poppins',
-                                    color: blue,
+                                    color: white,
                                     fontWeight: FontWeight.w600,
                                     height: 1.2),
                               )),
@@ -239,18 +244,6 @@ class _messsageScreenState extends State<messsageScreen> {
                           // padding: EdgeInsets.only(right: 28),
                           ),
                     ],
-                  ),
-                ),
-                SizedBox(height: 24),
-                Container(
-                  padding: EdgeInsets.only(left: 28),
-                  child: Text(
-                    "Messages",
-                    style: TextStyle(
-                        fontFamily: "Poppins",
-                        fontSize: 24.0,
-                        color: blue,
-                        fontWeight: FontWeight.w700),
                   ),
                 ),
                 SizedBox(height: 16),
@@ -348,7 +341,7 @@ class _messsageScreenState extends State<messsageScreen> {
                 SizedBox(height: 32),
                 Container(
                     padding: EdgeInsets.only(left: 28, right: 28),
-                    height: 545,
+                    height: 700 - 55,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(36),
@@ -464,7 +457,7 @@ class _messsageScreenState extends State<messsageScreen> {
                                                     style: TextStyle(
                                                         fontFamily: "Poppins",
                                                         fontSize: 14.0,
-                                                        color: blue,
+                                                        color: black,
                                                         fontWeight:
                                                             FontWeight.w700,
                                                         height: 1.4),

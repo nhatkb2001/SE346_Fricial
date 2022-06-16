@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:se346_fricial_project/constants/colors.dart';
 import 'package:se346_fricial_project/models/notifyModel.dart';
+import 'package:se346_fricial_project/notification/postNotification.dart';
 
 ///add constants
 
@@ -16,12 +17,14 @@ class atNotificationScreen extends StatefulWidget {
       : super(key: key);
 
   @override
-  _atNotificationScreen createState() => _atNotificationScreen();
+  _atNotificationScreen createState() => _atNotificationScreen(this.uid);
 }
 
 class _atNotificationScreen extends State<atNotificationScreen>
     with SingleTickerProviderStateMixin {
   List<notifyModel> notifyList = [];
+  String uid = '';
+  _atNotificationScreen(this.uid);
 
   Future getNotifiesList() async {
     print(widget.uid);
@@ -64,7 +67,10 @@ class _atNotificationScreen extends State<atNotificationScreen>
             body: Stack(children: [
           Container(
             decoration: BoxDecoration(
-              color: white,
+              image: DecorationImage(
+                image: AssetImage('assets/images/Fricial_background.png'),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           SingleChildScrollView(
@@ -76,8 +82,6 @@ class _atNotificationScreen extends State<atNotificationScreen>
                     child: Column(
                       children: [
                         Container(
-                            // margin: EdgeInsets.only(
-                            //     left: 24, right: 24, top: 20 + 20),
                             child: Column(
                           children: [
                             Container(
@@ -88,45 +92,12 @@ class _atNotificationScreen extends State<atNotificationScreen>
                                     fontFamily: 'Recoleta',
                                     fontSize: 32,
                                     fontWeight: FontWeight.w500,
-                                    color: black),
+                                    color: white),
                               ),
                             ),
                             SizedBox(height: 8),
-                            Container(
-                              alignment: Alignment.topLeft,
-                              child: Container(
-                                width: 192,
-                                height: 0.5,
-                                decoration: BoxDecoration(
-                                  color: gray,
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 8),
-                            Container(
-                              alignment: Alignment.topLeft,
-                              child: Container(
-                                width: 144,
-                                height: 0.5,
-                                decoration: BoxDecoration(
-                                  color: gray,
-                                ),
-                              ),
-                            ),
                           ],
                         )),
-                        SizedBox(height: 24),
-                        Container(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            'This month',
-                            style: TextStyle(
-                                fontFamily: 'Urbanist',
-                                fontSize: 16,
-                                color: blue,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
                         Container(
                           child: ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
@@ -139,12 +110,22 @@ class _atNotificationScreen extends State<atNotificationScreen>
                                     width: 327 + 24,
                                     margin: EdgeInsets.only(top: 8),
                                     decoration: BoxDecoration(
-                                        color: white,
+                                        color: Colors.transparent,
+                                        border: Border.all(color: gray),
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(8))),
                                     child: GestureDetector(
                                       onTap: () {
-                                        print('Post');
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: ((context) =>
+                                                    postNotification(
+                                                      context,
+                                                      postId: notifyList[index]
+                                                          .idPost,
+                                                      uid: uid,
+                                                    ))));
                                       },
                                       child: Row(
                                         crossAxisAlignment:
@@ -180,8 +161,7 @@ class _atNotificationScreen extends State<atNotificationScreen>
                                                 RichText(
                                                     text: TextSpan(
                                                         style: TextStyle(
-                                                          fontFamily:
-                                                              'Urbanist',
+                                                          fontFamily: 'Poppins',
                                                           fontSize: 16,
                                                           color: black,
                                                           fontWeight:
@@ -192,7 +172,7 @@ class _atNotificationScreen extends State<atNotificationScreen>
                                                         text: notifyList[index]
                                                             .nameSender,
                                                         style: TextStyle(
-                                                          color: blue,
+                                                          color: white,
                                                           fontWeight:
                                                               FontWeight.w600,
                                                         ),
@@ -217,117 +197,7 @@ class _atNotificationScreen extends State<atNotificationScreen>
                                                         notifyList[index]
                                                             .timeCreate,
                                                     style: TextStyle(
-                                                        fontFamily: 'Urbanist',
-                                                        fontSize: 12,
-                                                        color: gray,
-                                                        fontWeight:
-                                                            FontWeight.w400),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ));
-                              }),
-                        ),
-                        SizedBox(height: 24),
-                        Container(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            'Before',
-                            style: TextStyle(
-                                fontFamily: 'Urbanist',
-                                fontSize: 16,
-                                color: blue,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                        SizedBox(height: 16),
-                        Container(
-                          child: ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              scrollDirection: Axis.vertical,
-                              padding: EdgeInsets.only(top: 8),
-                              shrinkWrap: true,
-                              itemCount: 4,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                    width: 327 + 24,
-                                    margin: EdgeInsets.only(top: 8),
-                                    decoration: BoxDecoration(
-                                        color: white,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(8))),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        print('Post');
-                                      },
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            width: 44,
-                                            height: 44,
-                                            margin: EdgeInsets.only(
-                                                left: 16, bottom: 16, top: 16),
-                                            decoration: new BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              image: DecorationImage(
-                                                  image: NetworkImage(
-                                                      // userList[index]
-                                                      //     .avatar
-                                                      'https://i.imgur.com/bCnExb4.jpg'),
-                                                  fit: BoxFit.cover),
-                                            ),
-                                          ),
-                                          Container(
-                                            width: 183 + 24,
-                                            margin: EdgeInsets.only(left: 16),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                RichText(
-                                                    text: TextSpan(
-                                                        style: TextStyle(
-                                                          fontFamily:
-                                                              'Urbanist',
-                                                          fontSize: 16,
-                                                          color: black,
-                                                          fontWeight:
-                                                              FontWeight.w300,
-                                                        ),
-                                                        children: const <
-                                                            TextSpan>[
-                                                      TextSpan(
-                                                        text: 'pan_chao ',
-                                                        style: TextStyle(
-                                                          color: blue,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                                      ),
-                                                      TextSpan(
-                                                        text:
-                                                            'liked your photo. ',
-                                                        style: TextStyle(
-                                                          color: gray,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                        ),
-                                                      ),
-                                                    ])),
-                                                Container(
-                                                  padding:
-                                                      EdgeInsets.only(top: 8),
-                                                  alignment: Alignment.topLeft,
-                                                  child: Text(
-                                                    'Today, at 3:15 AM',
-                                                    style: TextStyle(
-                                                        fontFamily: 'Urbanist',
+                                                        fontFamily: 'Poppins',
                                                         fontSize: 12,
                                                         color: gray,
                                                         fontWeight:

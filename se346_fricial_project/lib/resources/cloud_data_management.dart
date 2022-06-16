@@ -48,6 +48,7 @@ class CloudStoreDataManagement {
 
       await _firestore.collection("users").doc(_auth.currentUser!.uid).set({
         'avatar': photoUrl,
+        'background': 'https://i.imgur.com/RUgPziD.jpg',
         'email': userEmail,
         'favoriteList': [],
         'fullName': fullname,
