@@ -79,23 +79,25 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
         'sendBy': uid,
         'messageId': messagesId,
         'timeSend': "${DateFormat('hh:mm a').format(DateTime.now())}",
-        'timeSendDetail': "$date"
+        'timeSendDetail':
+            "${DateFormat('y MMMM d, hh:mm:ss').format(DateTime.now())}"
       }).then((value) {
         FirebaseFirestore.instance
             .collection("messages")
             .doc(messagesId)
             .update({
           'contentList': FieldValue.arrayUnion([value.id]),
+          'lastMessage': messageController.text,
+          'lastTimeSend': "${DateFormat('hh:mm a').format(DateTime.now())}"
         });
         FirebaseFirestore.instance.collection("contents").doc(value.id).update({
           'contentId': value.id,
+        }).then((value) {
+          setState(() {
+            messageController.clear();
+          });
         });
       });
-      FirebaseFirestore.instance.collection("messages").doc(messagesId).update({
-        'lastMessage': messageController.text,
-        'lastTimeSend': "${DateFormat('hh:mm a').format(DateTime.now())}",
-      });
-      messageController.clear();
     }
   }
 
@@ -470,9 +472,8 @@ class _messageDetailScreenState extends State<messageDetailScreen> {
                                     //     }),
                                     onEditingComplete: () {
                                       setState(() {
-                                        sendMessage();
+                                        // sendMessage();
                                         getMessage2();
-                                        messageController.clear();
                                       });
                                     },
                                     decoration: InputDecoration(

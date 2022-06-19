@@ -82,7 +82,7 @@ class _atProfileScreen extends State<atProfileScreen>
         idFollowers.clear();
         owner = userModel.fromDocument(value.docs.first.data());
         photoUrl = owner.avatar;
-        idFollowers.add(owner.favoriteList);
+        idFollowers = owner.favoriteList;
       });
     });
   }
